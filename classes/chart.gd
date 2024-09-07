@@ -9,15 +9,13 @@ enum Track {
 	TRACK_4 = 4,
 }
 
-## 没考虑多押的加载！！！
-
 const BPM_MATCH_PATTERN: String = r"(?<=\()\-?\d+\.?(\d+)?(?=\))"
 const NOTE_TIME_MATCH_PATTERN: String = r"(?<=\{)\d+(?=\})"
 const EMPTY_NOTE_MATCH_PATTERN: String = r"(?<=[)},/])(?=,)"
 const TAP_NOTE_MATCH_PATTERN: String = r"(?<=[)},/])[1-4](?=[,/])"
 const CATCH_NOTE_MATCH_PATTERN: String = r"(?<=[)},/])[1-4]c(?=[,/])"
 const HOLD_NOTE_MATCH_PATTERN: String = r"(?<=[)},/])[1-4]h\[\d+:\d+](?=[,/])"
-const EACH_NOTE_MATCH_PATTERN: String = r"(?<=[)},])[0-9ch\[:\]/]*?,"
+const EACH_NOTE_MATCH_PATTERN: String = r"(?<=[)},])([0-9ch\[:\]]*/)+[0-9ch\[:\]]*,"
 
 
 func load_chart(_chart_content_text: String) -> Error:
@@ -36,55 +34,66 @@ func load_chart(_chart_content_text: String) -> Error:
 	if note_time_match_result.is_empty():
 		print("Load Error: Empty Note Time List")
 		return ERR_INVALID_PARAMETER
-	match_pattern.compile(Chart.NOTE_MATCH_PATTERN)
-	var note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
-	if note_match_result.filter(func(s): return s!=',').is_empty():
-		print("Load Error: Empty Note List")
-		return ERR_INVALID_PARAMETER
+	match_pattern.compile(Chart.EMPTY_NOTE_MATCH_PATTERN)
+	var empty_note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
+	match_pattern.compile(Chart.TAP_NOTE_MATCH_PATTERN)
+	var tap_note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
+	match_pattern.compile(Chart.CATCH_NOTE_MATCH_PATTERN)
+	var catch_note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
+	match_pattern.compile(Chart.HOLD_NOTE_MATCH_PATTERN)
+	var hold_note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
+	match_pattern.compile(Chart.EACH_NOTE_MATCH_PATTERN)
+	var each_note_match_result: Array[RegExMatch] = match_pattern.search_all(chart_content_text)
 	# 把匹配结果加入到列表中，然后按照匹配字符串开始位置排序
 	var chart_content_list: Array[Array] = []
 	for i in bpm_match_result:
 		chart_content_list.append(["BPM", i.get_string(), i.get_start()])
 	for i in note_time_match_result:
 		chart_content_list.append(["NoteTime", i.get_string(), i.get_start()])
-	for i in note_match_result:
-		chart_content_list.append(["Note", i.get_string(), i.get_start()])
+	for i in empty_note_match_result:
+		chart_content_list.append(["EmptyNote", i.get_string(), i.get_start()])
+	for i in tap_note_match_result:
+		chart_content_list.append(["TapNote", i.get_string(), i.get_start()])
+	for i in catch_note_match_result:
+		chart_content_list.append(["CatchNote", i.get_string(), i.get_start()])
+	for i in hold_note_match_result:
+		chart_content_list.append(["HoldNote", i.get_string(), i.get_start()])
+	for i in each_note_match_result:
+		chart_content_list.append(["EachNote", i.get_string(), i.get_start()])
 	chart_content_list.sort_custom(func(a, b): return a[-1] < b[-1])
 	# 把标记了字符串信息的列表转成ChartElement列表
 	var chart_content: Array[ChartElement] = []
-	var empty_note_match_result: Array[RegExMatch]
-	var tap_note_match_result: Array[RegExMatch]
-	var catch_note_match_result: Array[RegExMatch]
-	var hold_note_match_result: Array[RegExMatch]
+	var each_note_temp: Array[Note]
+	var each_note_content_count: int = 0
 	for i in range(len(chart_content_list)):
 		if chart_content_list[i][0] == "BPM":
 			chart_content.append(BPM.new(chart_content_list[i][1], i))
 		elif chart_content_list[i][0] == "NoteTime":
 			chart_content.append(NoteTime.new(chart_content_list[i][1], i))
-		elif chart_content_list[i][0] == "Note":
-			match_pattern.compile(Chart.EMPTY_NOTE_MATCH_PATTERN)
-			empty_note_match_result = match_pattern.search_all(chart_content_list[i][1])
-			match_pattern.compile(Chart.TAP_NOTE_MATCH_PATTERN)
-			tap_note_match_result = match_pattern.search_all(chart_content_list[i][1])
-			match_pattern.compile(Chart.CATCH_NOTE_MATCH_PATTERN)
-			catch_note_match_result = match_pattern.search_all(chart_content_list[i][1])
-			match_pattern.compile(Chart.HOLD_NOTE_MATCH_PATTERN)
-			hold_note_match_result = match_pattern.search_all(chart_content_list[i][1])
-			if len(tap_note_match_result) + len(catch_note_match_result) + len(hold_note_match_result) < 1:
-				print("Load Error: Empty Note List")
-				return ERR_INVALID_PARAMETER
-			chart_content.append([])
-			for i in empty_note_match_result:
-				
-		
+		elif chart_content_list[i][0] == "EmptyNote":
+			chart_content.append(EmptyNote.new(chart_content_list[i][1], i))
+		elif chart_content_list[i][0] == "TapNote":
+			chart_content.append(TapNote.new(chart_content_list[i][1], 1))
+		elif chart_content_list[i][0] == "CatchNote":
+			chart_content.append(CatchNote.new(chart_content_list[i][1], 1))
+		elif chart_content_list[i][0] == "HoldNote":
+			chart_content.append(HoldNote.new(chart_content_list[i][1], 1))
+		elif chart_content_list[i][0] == "EachNote":
+			each_note_temp = EachNote.new(chart_content_list[i][1], 1).note_list
+			each_note_content_count += len(each_note_temp)
+			if each_note_temp != []:
+				chart_content.append(each_note_temp)
+	if len(tap_note_match_result) + len(catch_note_match_result) + len(hold_note_match_result) + each_note_content_count < 1:
+		print("Load Error: Empty Note List")
+		return ERR_INVALID_PARAMETER
 	self.chart = chart_content
 	return OK
 
 
 func load_chart_from_reference(_reference: BaseChartDirReference) -> Error:
 	var chart_file: FileAccess = FileAccess.open(_reference.chart_file_path, FileAccess.READ)
-	if chart_file.get_open_error():
-		return chart_file.get_open_error()
+	if FileAccess.get_open_error():
+		return FileAccess.get_open_error()
 	var chart_content: String = chart_file.get_as_text()
 	var chart_content_list: PackedStringArray = chart_content.split("\n")
 	var new_chart_content_list: PackedStringArray = []
@@ -313,7 +322,24 @@ class EachNote extends Note:
 		var tap_note_match_result: Array[RegExMatch] = match_pattern.search_all(Chart.TAP_NOTE_MATCH_PATTERN)
 		var catch_note_match_result: Array[RegExMatch] = match_pattern.search_all(Chart.CATCH_NOTE_MATCH_PATTERN)
 		var hold_note_match_result: Array[RegExMatch] = match_pattern.search_all(Chart.HOLD_NOTE_MATCH_PATTERN)
-		
+		var note_list_temp: Array[Array]
+		for i in empty_note_match_result:
+			note_list_temp.append(["EmptyNote", i.get_string()])
+		for i in tap_note_match_result:
+			note_list_temp.append(["TapNote", i.get_string()])
+		for i in catch_note_match_result:
+			note_list_temp.append(["CatchNote", i.get_string()])
+		for i in hold_note_match_result:
+			note_list_temp.append(["HoldNote", i.get_string()])
+		for i in note_list_temp:
+			if i[0] == "EmptyNote":
+				pass   # note_list.append(EmptyNote.new(i[1], _index))
+			elif i[0] == "TapNote":
+				note_list.append(TapNote.new(i[1], _index))
+			elif i[0] == "CatchNote":
+				note_list.append(CatchNote.new(i[1], _index))
+			elif i[0] == "HoldNote":
+				note_list.append(HoldNote.new(i[1], _index))
 
 	func _to_string() -> String:
 		var result: String = "EachNote(["

@@ -12,8 +12,8 @@ const DEFAULT_BG_FILE_PATH: String = "res://images/default_bg.png"
 
 func open(_chart_dir_path: String) -> Error:
 	var chart_dir: DirAccess = DirAccess.open(_chart_dir_path)
-	if chart_dir.get_open_error():
-		return chart_dir.get_open_error()
+	if DirAccess.get_open_error():
+		return DirAccess.get_open_error()
 	chart_dir.list_dir_begin()
 	var file_name: String = chart_dir.get_next()
 	while file_name:
@@ -46,6 +46,7 @@ func get_basic_info() -> Dictionary:
 		return basic_info
 	var new_line: String = chart_file.get_line().strip_edges()
 	var basic_info_single_list: PackedStringArray
+	var is_bpm_read: bool = false
 	while not chart_file.eof_reached():
 		if new_line.is_empty():
 			new_line = chart_file.get_line().strip_edges()
@@ -58,11 +59,13 @@ func get_basic_info() -> Dictionary:
 			basic_info_single_list[0] = basic_info_single_list[0].strip_edges()
 			basic_info_single_list[1] = basic_info_single_list[1].strip_edges()
 			print("basic_info_single_list = ", basic_info_single_list)
-			if basic_info_single_list[0] in ["song_name", "composer", "chart_designer", "illustrator"]:
+			if basic_info_single_list[0] in ["song_name", "composer", "chart_designer", "illustrator", "bpm"]:
 				basic_info[basic_info_single_list[0]] = basic_info_single_list[1]
+				if basic_info_single_list[0] == "bpm":
+					is_bpm_read = true
 		new_line = chart_file.get_line().strip_edges()
 		print("new_line = \"" + new_line + "\"")
-	if new_line[0] == '(':
+	if new_line[0] == '(' and not is_bpm_read:
 		new_line = new_line.strip_escapes().replace(' ', '').trim_prefix('(').left(new_line.find(')'))
 		basic_info["bpm"] = float(new_line)
 	return basic_info
