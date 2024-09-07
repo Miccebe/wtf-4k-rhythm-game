@@ -1,0 +1,290 @@
+[gd_scene load_steps=17 format=3 uid="uid://coiv0twb4dfm5"]
+
+[ext_resource type="Script" path="res://game_play_scene/game_play_scene.gd" id="1_dsjt2"]
+[ext_resource type="FontFile" uid="uid://docqgmt0qhi30" path="res://JETBRAINSMONO-EXTRABOLD.TTF" id="1_m5g10"]
+[ext_resource type="Script" path="res://game_play_scene/score_display.gd" id="1_noj84"]
+[ext_resource type="Script" path="res://game_play_scene/judgement_display.gd" id="3_ht3om"]
+[ext_resource type="Script" path="res://game_play_scene/retry_button.gd" id="4_gbsf5"]
+[ext_resource type="Script" path="res://game_play_scene/paused_text.gd" id="4_xdp6r"]
+[ext_resource type="Script" path="res://game_play_scene/exit_button.gd" id="5_fwllg"]
+[ext_resource type="Script" path="res://game_play_scene/pause_button.gd" id="6_dnk7c"]
+[ext_resource type="Script" path="res://game_play_scene/hit_effect.gd" id="8_bt3ar"]
+[ext_resource type="Texture2D" uid="uid://b7ecv2duohx35" path="res://images/hit_effect.png" id="9_gardf"]
+[ext_resource type="AudioStream" uid="uid://v3y3p0ih6fs3" path="res://sound_effects/tap_hit.mp3" id="10_o51dp"]
+[ext_resource type="AudioStream" uid="uid://8v3ky5ixh5m5" path="res://sound_effects/catch_hit.mp3" id="11_cwej0"]
+[ext_resource type="Script" path="res://game_play_scene/track_sound.gd" id="12_e5udy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ti8e8"]
+font = ExtResource("1_m5g10")
+
+[sub_resource type="LabelSettings" id="LabelSettings_rcpd7"]
+font = ExtResource("1_m5g10")
+font_size = 40
+font_color = Color(0.913725, 0, 0, 1)
+outline_size = 8
+outline_color = Color(1, 0.476318, 0.390625, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jcqxr"]
+font = ExtResource("1_m5g10")
+font_size = 93
+font_color = Color(0, 1, 0.233333, 1)
+outline_size = 14
+outline_color = Color(0, 0.243137, 0.352941, 1)
+
+[node name="GamePlayScene" type="Node2D"]
+script = ExtResource("1_dsjt2")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="BlackBackground" type="ColorRect" parent="Background"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0.241791, 0.351563, 1)
+
+[node name="ChartArea" type="Node2D" parent="Background"]
+light_mask = 2
+visibility_layer = 2
+
+[node name="BorderLine1" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(350, -10, 350, 658)
+width = 4.0
+
+[node name="BorderLine2" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(410, -10, 410, 658)
+width = 4.0
+
+[node name="BorderLine3" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(470, -10, 470, 658)
+width = 4.0
+
+[node name="BorderLine4" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(530, -10, 530, 658)
+width = 4.0
+
+[node name="BorderLine5" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(590, -10, 590, 658)
+width = 4.0
+
+[node name="JudgementLine" type="Line2D" parent="Background/ChartArea"]
+points = PackedVector2Array(350, 600, 590, 600)
+width = 4.0
+
+[node name="Texts" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ScoreDisplay" type="Label" parent="Background/Texts"]
+layout_mode = 0
+offset_left = 667.0
+offset_top = 379.0
+offset_right = 707.0
+offset_bottom = 402.0
+label_settings = SubResource("LabelSettings_ti8e8")
+script = ExtResource("1_noj84")
+
+[node name="JudgementDisplay" type="Label" parent="Background/Texts"]
+layout_mode = 0
+offset_left = 271.0
+offset_top = 360.0
+offset_right = 671.0
+offset_bottom = 420.0
+pivot_offset = Vector2(200, 30)
+localize_numeral_system = false
+label_settings = SubResource("LabelSettings_rcpd7")
+horizontal_alignment = 1
+script = ExtResource("3_ht3om")
+text_type = 2
+
+[node name="PausedText" type="Label" parent="Background/Texts"]
+visible = false
+layout_mode = 0
+offset_left = 304.0
+offset_top = 249.0
+offset_right = 639.0
+offset_bottom = 372.0
+text = "Paused"
+label_settings = SubResource("LabelSettings_jcqxr")
+script = ExtResource("4_xdp6r")
+
+[node name="Tests" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 48.0
+offset_top = 34.0
+offset_right = 314.0
+offset_bottom = 623.0
+
+[node name="Button" type="Button" parent="Tests"]
+layout_mode = 0
+offset_right = 117.0
+offset_bottom = 45.0
+text = "测试谱面内容打印"
+
+[node name="Button2" type="Button" parent="Tests"]
+layout_mode = 0
+offset_top = 69.0
+offset_right = 136.0
+offset_bottom = 111.0
+text = "测试导出谱面打印"
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RetryButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 994.0
+offset_top = 90.0
+offset_right = 1086.0
+offset_bottom = 135.0
+mouse_default_cursor_shape = 2
+text = "Retry"
+script = ExtResource("4_gbsf5")
+
+[node name="ExitButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 996.0
+offset_top = 167.0
+offset_right = 1085.0
+offset_bottom = 212.0
+mouse_default_cursor_shape = 2
+text = "Exit"
+script = ExtResource("5_fwllg")
+
+[node name="PauseButton" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 995.0
+offset_top = 238.0
+offset_right = 1084.0
+offset_bottom = 283.0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Pause"
+script = ExtResource("6_dnk7c")
+
+[node name="ChartDisplay" type="Node2D" parent="."]
+
+[node name="HitEffect" type="Node2D" parent="ChartDisplay"]
+script = ExtResource("8_bt3ar")
+
+[node name="Track1" type="Sprite2D" parent="ChartDisplay/HitEffect"]
+visible = false
+position = Vector2(380, 522.5)
+scale = Vector2(1.75, 1.17969)
+texture = ExtResource("9_gardf")
+
+[node name="Track2" type="Sprite2D" parent="ChartDisplay/HitEffect"]
+visible = false
+position = Vector2(440, 523)
+scale = Vector2(1.75, 1.17969)
+texture = ExtResource("9_gardf")
+
+[node name="Track3" type="Sprite2D" parent="ChartDisplay/HitEffect"]
+visible = false
+position = Vector2(500, 523)
+scale = Vector2(1.75, 1.17969)
+texture = ExtResource("9_gardf")
+
+[node name="Track4" type="Sprite2D" parent="ChartDisplay/HitEffect"]
+visible = false
+position = Vector2(560, 523)
+scale = Vector2(1.75, 1.17969)
+texture = ExtResource("9_gardf")
+
+[node name="NoteTypes" type="Node2D" parent="ChartDisplay"]
+
+[node name="Track1" type="Node2D" parent="ChartDisplay/NoteTypes"]
+
+[node name="TapDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track1"]
+position = Vector2(380, 600)
+color = Color(0, 0.833333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="DragDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track1"]
+position = Vector2(380, 600)
+color = Color(1, 0.975667, 0.27, 1)
+polygon = PackedVector2Array(-25, -6, 25, -6, 25, 0, -25, 0)
+
+[node name="HoldDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track1"]
+position = Vector2(380, 600)
+color = Color(0, 0.533333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="Track2" type="Node2D" parent="ChartDisplay/NoteTypes"]
+
+[node name="TapDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track2"]
+position = Vector2(440, 600)
+color = Color(0, 0.833333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="DragDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track2"]
+position = Vector2(440, 600)
+color = Color(1, 0.975667, 0.27, 1)
+polygon = PackedVector2Array(-25, -6, 25, -6, 25, 0, -25, 0)
+
+[node name="HoldDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track2"]
+position = Vector2(440, 600)
+color = Color(0, 0.533333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="Track3" type="Node2D" parent="ChartDisplay/NoteTypes"]
+
+[node name="TapDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track3"]
+position = Vector2(500, 600)
+color = Color(0, 0.833333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="DragDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track3"]
+position = Vector2(500, 600)
+color = Color(1, 0.975667, 0.27, 1)
+polygon = PackedVector2Array(-25, -6, 25, -6, 25, 0, -25, 0)
+
+[node name="HoldDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track3"]
+position = Vector2(500, 600)
+color = Color(0, 0.533333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="Track4" type="Node2D" parent="ChartDisplay/NoteTypes"]
+
+[node name="TapDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track4"]
+position = Vector2(560, 600)
+color = Color(0, 0.833333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="DragDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track4"]
+position = Vector2(560, 600)
+color = Color(1, 0.975667, 0.27, 1)
+polygon = PackedVector2Array(-25, -6, 25, -6, 25, 0, -25, 0)
+
+[node name="HoldDisplay" type="Polygon2D" parent="ChartDisplay/NoteTypes/Track4"]
+position = Vector2(560, 600)
+color = Color(0, 0.533333, 1, 1)
+polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
+
+[node name="HitSounds" type="Node" parent="ChartDisplay"]
+
+[node name="Tap" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
+stream = ExtResource("10_o51dp")
+
+[node name="Catch" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
+stream = ExtResource("11_cwej0")
+
+[node name="HoldStart" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
+stream = ExtResource("10_o51dp")
+
+[node name="HoldEnd" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
+stream = ExtResource("10_o51dp")
+
+[node name="TrackSound" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
+stream = ExtResource("10_o51dp")
+script = ExtResource("12_e5udy")
+
+[connection signal="pressed" from="Tests/Button" to="." method="_on_print_chart"]
+[connection signal="pressed" from="Tests/Button2" to="." method="_on_print_exported_chart"]
+[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_pause_button_continued"]
+[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_pause_button_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_pause_button_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_pause_button_paused"]
+[connection signal="toggled" from="Buttons/PauseButton" to="Background/Texts/PausedText" method="_on_pause_button_toggled"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://n1ngr8iikure"]
+
+[ext_resource type="Script" path="res://music_select_scene/start_game_button.gd" id="1_prldb"]
+
+[node name="MusicSelectScene" type="Node2D"]
+
+[node name="BlackBackground" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="StartGameButton" type="Button" parent="."]
+offset_left = 493.0
+offset_top = 280.0
+offset_right = 663.0
+offset_bottom = 325.0
+mouse_default_cursor_shape = 2
+text = "开始游玩"
+script = ExtResource("1_prldb")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 804.0
+offset_top = 437.0
+offset_right = 1025.0
+offset_bottom = 559.0
+text = "选歌界面：
+不好意思，没做"

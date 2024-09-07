@@ -1,0 +1,696 @@
+[gd_scene load_steps=15 format=3 uid="uid://beno4imwkrn5i"]
+
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/settings_scene.gd" id="1_3v347"]
+[ext_resource type="FontFile" uid="uid://docqgmt0qhi30" path="res://JETBRAINSMONO-EXTRABOLD.TTF" id="1_aoi3b"]
+[ext_resource type="LabelSettings" uid="uid://q7cipqvm0skh" path="res://music_select_scene/settings_scene/settings_scene.tres" id="2_tsgin"]
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/right.gd" id="2_vxde7"]
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/left.gd" id="3_gjvi3"]
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/range_settings.gd" id="5_07vx2"]
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/offset_adjustment_button.gd" id="5_8vawa"]
+[ext_resource type="Script" path="res://music_select_scene/settings_scene/keybind_settings.gd" id="8_ptb6x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_prfxh"]
+font_size = 31
+
+[sub_resource type="LabelSettings" id="LabelSettings_t7p0n"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_modah"]
+font = ExtResource("1_aoi3b")
+font_size = 33
+shadow_size = 3
+shadow_color = Color(0.27, 0.27, 0.27, 0.709804)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xtwml"]
+font = ExtResource("1_aoi3b")
+font_size = 23
+shadow_color = Color(0.31, 0.31, 0.31, 0.772549)
+
+[sub_resource type="Theme" id="Theme_diqod"]
+default_font = ExtResource("1_aoi3b")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jk25v"]
+font = ExtResource("1_aoi3b")
+font_size = 23
+shadow_color = Color(0.31, 0.31, 0.31, 0.772549)
+
+[node name="SettingsScene" type="Node2D"]
+script = ExtResource("1_3v347")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(2.20198e-06, 0.321022, 0.290098, 1)
+
+[node name="Background2" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -393.0
+offset_top = -243.5
+offset_right = 393.0
+offset_bottom = 243.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(2.16588e-06, 0.443115, 0.412615, 1)
+
+[node name="Close" type="Button" parent="."]
+offset_left = 351.0
+offset_top = -235.0
+offset_right = 386.0
+offset_bottom = -200.0
+mouse_default_cursor_shape = 2
+
+[node name="Label" type="Label" parent="Close"]
+layout_mode = 0
+offset_top = -5.455
+offset_right = 35.0
+offset_bottom = 38.545
+text = "×"
+label_settings = SubResource("LabelSettings_prfxh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 340.0
+offset_top = -32.0
+offset_right = 384.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_vxde7")
+
+[node name="Title" type="Label" parent="RightButton"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 64.0
+mouse_default_cursor_shape = 2
+text = "▶"
+label_settings = SubResource("LabelSettings_t7p0n")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -32.0
+offset_right = -340.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_gjvi3")
+
+[node name="Title" type="Label" parent="LeftButton"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 64.0
+mouse_default_cursor_shape = 2
+text = "◀"
+label_settings = SubResource("LabelSettings_t7p0n")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameSettings" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -227.135
+offset_right = 296.0
+offset_bottom = 180.865
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(320, 185)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.95
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.7
+text = "Game Settings"
+label_settings = SubResource("LabelSettings_modah")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChartSettingsTitle" type="MarginContainer" parent="Control/GameSettings"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 10
+
+[node name="Container" type="HBoxContainer" parent="Control/GameSettings/ChartSettingsTitle"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Control/GameSettings/ChartSettingsTitle/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 13.34
+text = "            Chart Settings"
+label_settings = SubResource("LabelSettings_xtwml")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OffsetAdjustmentButton" type="Button" parent="Control/GameSettings/ChartSettingsTitle/Container"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Start Offset Adjustment"
+script = ExtResource("5_8vawa")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton"]
+title = "你好"
+initial_position = 1
+size = Vector2i(160, 100)
+theme = SubResource("Theme_diqod")
+
+[node name="Label" type="Label" parent="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 52.0
+text = "不好意思，还没做"
+
+[node name="MusicOffset" type="HBoxContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+greater_text = "$self$"
+lesser_text = "$self$"
+settings_name = "music_offset"
+
+[node name="Title" type="Label" parent="Control/GameSettings/MusicOffset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Offset"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/GameSettings/MusicOffset"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/GameSettings/MusicOffset"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="Plus" type="Button" parent="Control/GameSettings/MusicOffset"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/GameSettings/MusicOffset"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "0"
+alignment = 1
+
+[node name="InputOffset" type="HBoxContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+greater_text = "$self$"
+lesser_text = "$self$"
+settings_name = "input_offset"
+
+[node name="Title" type="Label" parent="Control/GameSettings/InputOffset"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Input Offset"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/GameSettings/InputOffset"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/GameSettings/InputOffset"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+min_value = -1000.0
+max_value = 1000.0
+
+[node name="Plus" type="Button" parent="Control/GameSettings/InputOffset"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/GameSettings/InputOffset"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "0"
+alignment = 1
+
+[node name="ChartFlowSpeed" type="HBoxContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+default_value = 7.0
+value_max = 12.0
+value_min = 1.0
+greater_text = "Sonic"
+integer = false
+settings_name = "chart_flow_speed"
+
+[node name="Title" type="Label" parent="Control/GameSettings/ChartFlowSpeed"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chart Flow Speed"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/GameSettings/ChartFlowSpeed"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/GameSettings/ChartFlowSpeed"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+min_value = 1.0
+max_value = 12.0
+step = 0.25
+value = 7.0
+
+[node name="Plus" type="Button" parent="Control/GameSettings/ChartFlowSpeed"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/GameSettings/ChartFlowSpeed"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "7"
+alignment = 1
+
+[node name="KeybindSettingsTitle" type="Label" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.43
+text = "Keybind Settings"
+label_settings = SubResource("LabelSettings_jk25v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Track1Keybind" type="MarginContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+script = ExtResource("8_ptb6x")
+settings_name = "track1_key"
+
+[node name="Container" type="HBoxContainer" parent="Control/GameSettings/Track1Keybind"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/GameSettings/Track1Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Track 1 Keybind"
+label_settings = ExtResource("2_tsgin")
+
+[node name="Button" type="Button" parent="Control/GameSettings/Track1Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+toggle_mode = true
+text = "D"
+
+[node name="Track2Keybind" type="MarginContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+script = ExtResource("8_ptb6x")
+keybind = 70
+settings_name = "track2_key"
+
+[node name="Container" type="HBoxContainer" parent="Control/GameSettings/Track2Keybind"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/GameSettings/Track2Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Track 2 Keybind"
+label_settings = ExtResource("2_tsgin")
+
+[node name="Button" type="Button" parent="Control/GameSettings/Track2Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+toggle_mode = true
+text = "F"
+
+[node name="Track3Keybind" type="MarginContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+script = ExtResource("8_ptb6x")
+keybind = 74
+settings_name = "track3_key"
+
+[node name="Container" type="HBoxContainer" parent="Control/GameSettings/Track3Keybind"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/GameSettings/Track3Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Track 3 Keybind"
+label_settings = ExtResource("2_tsgin")
+
+[node name="Button" type="Button" parent="Control/GameSettings/Track3Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+toggle_mode = true
+text = "J"
+
+[node name="Track4Keybind" type="MarginContainer" parent="Control/GameSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.4
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_right = 120
+script = ExtResource("8_ptb6x")
+keybind = 75
+settings_name = "track4_key"
+
+[node name="Container" type="HBoxContainer" parent="Control/GameSettings/Track4Keybind"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/GameSettings/Track4Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Track 4 Keybind"
+label_settings = ExtResource("2_tsgin")
+
+[node name="Button" type="Button" parent="Control/GameSettings/Track4Keybind/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+toggle_mode = true
+text = "K"
+
+[node name="VolumeSettings" type="VBoxContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -191.0
+offset_right = 296.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(320, 185)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.95
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/VolumeSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.01
+text = "Volume Settings"
+label_settings = SubResource("LabelSettings_modah")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolume" type="HBoxContainer" parent="Control/VolumeSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+default_value = 100.0
+value_max = 100.0
+value_min = 0.0
+percentage = true
+changed_actual_time = true
+settings_name = "music_volume"
+
+[node name="Title" type="Label" parent="Control/VolumeSettings/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+text = "Music Volume"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/VolumeSettings/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/VolumeSettings/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+value = 100.0
+
+[node name="Plus" type="Button" parent="Control/VolumeSettings/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/VolumeSettings/MusicVolume"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "100%"
+alignment = 1
+
+[node name="SEVolume" type="HBoxContainer" parent="Control/VolumeSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+default_value = 100.0
+value_max = 100.0
+value_min = 0.0
+percentage = true
+settings_name = "se_volume"
+
+[node name="Title" type="Label" parent="Control/VolumeSettings/SEVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+text = "SE Volume"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/VolumeSettings/SEVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/VolumeSettings/SEVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+value = 100.0
+
+[node name="Plus" type="Button" parent="Control/VolumeSettings/SEVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/VolumeSettings/SEVolume"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "100%"
+alignment = 1
+
+[node name="CorrectVolume" type="HBoxContainer" parent="Control/VolumeSettings"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.6
+script = ExtResource("5_07vx2")
+default_value = 100.0
+value_max = 100.0
+value_min = 0.0
+percentage = true
+settings_name = "correct_volume"
+
+[node name="Title" type="Label" parent="Control/VolumeSettings/CorrectVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+text = "Correct Volume"
+label_settings = ExtResource("2_tsgin")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Minus" type="Button" parent="Control/VolumeSettings/CorrectVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " － "
+
+[node name="Slider" type="HSlider" parent="Control/VolumeSettings/CorrectVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.64
+value = 100.0
+allow_greater = true
+
+[node name="Plus" type="Button" parent="Control/VolumeSettings/CorrectVolume"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.15
+mouse_default_cursor_shape = 2
+text = " ＋ "
+
+[node name="ValueText" type="LineEdit" parent="Control/VolumeSettings/CorrectVolume"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+text = "100%"
+alignment = 1
+
+[connection signal="page_changed" from="." to="RightButton" method="_on_page_changed"]
+[connection signal="page_changed" from="." to="LeftButton" method="_on_page_changed"]
+[connection signal="pressed" from="Close" to="." method="save_settings"]
+[connection signal="pressed" from="Close" to="." method="close_windows"]
+[connection signal="pressed" from="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton" to="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" method="show"]
+[connection signal="confirmed" from="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" to="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" method="hide"]
+[connection signal="button_down" from="Control/GameSettings/MusicOffset/Minus" to="Control/GameSettings/MusicOffset" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/MusicOffset/Minus" to="Control/GameSettings/MusicOffset" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/GameSettings/MusicOffset/Slider" to="Control/GameSettings/MusicOffset" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/GameSettings/MusicOffset/Plus" to="Control/GameSettings/MusicOffset" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/MusicOffset/Plus" to="Control/GameSettings/MusicOffset" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/GameSettings/MusicOffset/ValueText" to="Control/GameSettings/MusicOffset" method="_on_text_changed"]
+[connection signal="button_down" from="Control/GameSettings/InputOffset/Minus" to="Control/GameSettings/InputOffset" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/InputOffset/Minus" to="Control/GameSettings/InputOffset" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/GameSettings/InputOffset/Slider" to="Control/GameSettings/InputOffset" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/GameSettings/InputOffset/Plus" to="Control/GameSettings/InputOffset" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/InputOffset/Plus" to="Control/GameSettings/InputOffset" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/GameSettings/InputOffset/ValueText" to="Control/GameSettings/InputOffset" method="_on_text_changed"]
+[connection signal="button_down" from="Control/GameSettings/ChartFlowSpeed/Minus" to="Control/GameSettings/ChartFlowSpeed" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/ChartFlowSpeed/Minus" to="Control/GameSettings/ChartFlowSpeed" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/GameSettings/ChartFlowSpeed/Slider" to="Control/GameSettings/ChartFlowSpeed" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/GameSettings/ChartFlowSpeed/Plus" to="Control/GameSettings/ChartFlowSpeed" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/GameSettings/ChartFlowSpeed/Plus" to="Control/GameSettings/ChartFlowSpeed" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/GameSettings/ChartFlowSpeed/ValueText" to="Control/GameSettings/ChartFlowSpeed" method="_on_text_changed"]
+[connection signal="button_down" from="Control/GameSettings/Track1Keybind/Container/Button" to="Control/GameSettings/Track1Keybind" method="_on_button_down"]
+[connection signal="button_down" from="Control/GameSettings/Track2Keybind/Container/Button" to="Control/GameSettings/Track2Keybind" method="_on_button_down"]
+[connection signal="button_down" from="Control/GameSettings/Track3Keybind/Container/Button" to="Control/GameSettings/Track3Keybind" method="_on_button_down"]
+[connection signal="button_down" from="Control/GameSettings/Track4Keybind/Container/Button" to="Control/GameSettings/Track4Keybind" method="_on_button_down"]
+[connection signal="button_down" from="Control/VolumeSettings/MusicVolume/Minus" to="Control/VolumeSettings/MusicVolume" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/MusicVolume/Minus" to="Control/VolumeSettings/MusicVolume" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/VolumeSettings/MusicVolume/Slider" to="Control/VolumeSettings/MusicVolume" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/VolumeSettings/MusicVolume/Plus" to="Control/VolumeSettings/MusicVolume" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/MusicVolume/Plus" to="Control/VolumeSettings/MusicVolume" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/VolumeSettings/MusicVolume/ValueText" to="Control/VolumeSettings/MusicVolume" method="_on_text_changed"]
+[connection signal="button_down" from="Control/VolumeSettings/SEVolume/Minus" to="Control/VolumeSettings/SEVolume" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/SEVolume/Minus" to="Control/VolumeSettings/SEVolume" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/VolumeSettings/SEVolume/Slider" to="Control/VolumeSettings/SEVolume" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/VolumeSettings/SEVolume/Plus" to="Control/VolumeSettings/SEVolume" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/SEVolume/Plus" to="Control/VolumeSettings/SEVolume" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/VolumeSettings/SEVolume/ValueText" to="Control/VolumeSettings/SEVolume" method="_on_text_changed"]
+[connection signal="button_down" from="Control/VolumeSettings/CorrectVolume/Minus" to="Control/VolumeSettings/CorrectVolume" method="_on_minus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/CorrectVolume/Minus" to="Control/VolumeSettings/CorrectVolume" method="_on_minus_button_up"]
+[connection signal="value_changed" from="Control/VolumeSettings/CorrectVolume/Slider" to="Control/VolumeSettings/CorrectVolume" method="_on_slider_changed"]
+[connection signal="button_down" from="Control/VolumeSettings/CorrectVolume/Plus" to="Control/VolumeSettings/CorrectVolume" method="_on_plus_button_down"]
+[connection signal="button_up" from="Control/VolumeSettings/CorrectVolume/Plus" to="Control/VolumeSettings/CorrectVolume" method="_on_plus_button_up"]
+[connection signal="text_submitted" from="Control/VolumeSettings/CorrectVolume/ValueText" to="Control/VolumeSettings/CorrectVolume" method="_on_text_changed"]

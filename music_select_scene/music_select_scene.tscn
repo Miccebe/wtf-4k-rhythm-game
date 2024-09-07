@@ -1,0 +1,148 @@
+[gd_scene load_steps=13 format=3 uid="uid://n1ngr8iikure"]
+
+[ext_resource type="Script" path="res://music_select_scene/music_select_scene.gd" id="1_mtx54"]
+[ext_resource type="Script" path="res://music_select_scene/start_game_button.gd" id="1_prldb"]
+[ext_resource type="FontFile" uid="uid://docqgmt0qhi30" path="res://JETBRAINSMONO-EXTRABOLD.TTF" id="2_5kk1s"]
+[ext_resource type="Script" path="res://music_select_scene/songs_list_content.gd" id="3_n8xay"]
+[ext_resource type="Script" path="res://music_select_scene/chart_info.gd" id="5_e1xri"]
+[ext_resource type="Script" path="res://music_select_scene/music.gd" id="6_75ahw"]
+[ext_resource type="Script" path="res://music_select_scene/settings_button.gd" id="6_omfau"]
+[ext_resource type="PackedScene" uid="uid://beno4imwkrn5i" path="res://music_select_scene/settings_scene/settings_scene.tscn" id="6_yi83e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4dbiw"]
+font = ExtResource("2_5kk1s")
+font_size = 30
+font_color = Color(0.146988, 0.964844, 0.4724, 1)
+outline_size = 6
+outline_color = Color(0.0557251, 0.324219, 0, 1)
+shadow_color = Color(0.45, 0.45, 0.45, 0)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7wgr8"]
+font = ExtResource("2_5kk1s")
+font_size = 19
+shadow_size = 4
+shadow_color = Color(0.27, 0.27, 0.27, 0.568627)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pvi3h"]
+font = ExtResource("2_5kk1s")
+font_size = 18
+shadow_size = 3
+shadow_color = Color(0.26, 0.26, 0.26, 0.560784)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="Theme" id="Theme_pbwfv"]
+default_font = ExtResource("2_5kk1s")
+
+[node name="MusicSelectScene" type="Node2D"]
+script = ExtResource("1_mtx54")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(1.05888e-06, 0.475744, 0.586686, 1)
+
+[node name="StartGameButton" type="Button" parent="."]
+offset_left = 844.0
+offset_top = 483.0
+offset_right = 1070.0
+offset_bottom = 551.0
+mouse_default_cursor_shape = 2
+script = ExtResource("1_prldb")
+
+[node name="ButtonText" type="Label" parent="StartGameButton"]
+layout_mode = 0
+offset_right = 226.0
+offset_bottom = 69.0
+text = "Start Game!"
+label_settings = SubResource("LabelSettings_4dbiw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SongsListContent" type="ItemList" parent="."]
+offset_left = 38.0
+offset_top = 50.0
+offset_right = 257.0
+offset_bottom = 620.0
+script = ExtResource("3_n8xay")
+
+[node name="SongsListTitle" type="Label" parent="."]
+offset_left = 41.0
+offset_top = 14.0
+offset_right = 237.0
+offset_bottom = 42.0
+text = "Songs List"
+label_settings = SubResource("LabelSettings_7wgr8")
+
+[node name="ReloadSongsListButton" type="Button" parent="."]
+offset_left = 173.0
+offset_top = 12.0
+offset_right = 256.0
+offset_bottom = 43.0
+mouse_default_cursor_shape = 2
+text = "Reload"
+
+[node name="ChartInfo" type="Node2D" parent="."]
+script = ExtResource("5_e1xri")
+
+[node name="Bg" type="Sprite2D" parent="ChartInfo"]
+position = Vector2(505, 403)
+
+[node name="Music" type="AudioStreamPlayer" parent="ChartInfo"]
+mix_target = 1
+script = ExtResource("6_75ahw")
+
+[node name="BasicInfo" type="Label" parent="ChartInfo"]
+offset_left = 305.0
+offset_top = 27.0
+offset_right = 1004.0
+offset_bottom = 203.0
+text = "Title:
+Composer:
+Illustrator:
+Chart Designer:
+BPM:
+"
+label_settings = SubResource("LabelSettings_pvi3h")
+vertical_alignment = 1
+
+[node name="Settings" type="Button" parent="."]
+offset_left = 1069.0
+offset_top = 9.0
+offset_right = 1143.0
+offset_bottom = 55.0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Settings"
+script = ExtResource("6_omfau")
+
+[node name="SettingsScene" parent="." instance=ExtResource("6_yi83e")]
+visible = false
+position = Vector2(576, 324)
+
+[node name="ChartLoadErrorDialog" type="AcceptDialog" parent="."]
+title = "Warning!"
+initial_position = 1
+size = Vector2i(506, 132)
+theme = SubResource("Theme_pbwfv")
+
+[node name="Label" type="Label" parent="ChartLoadErrorDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 498.0
+offset_bottom = 84.0
+text = "Chart load failed or error!
+Please check your chart file if there's any syntax."
+
+[connection signal="chart_load_failed" from="StartGameButton" to="ChartLoadErrorDialog" method="show"]
+[connection signal="disable" from="StartGameButton" to="StartGameButton" method="_on_disable"]
+[connection signal="enable" from="StartGameButton" to="StartGameButton" method="_on_enable"]
+[connection signal="item_selected" from="SongsListContent" to="ChartInfo" method="_on_item_selected"]
+[connection signal="pressed" from="ReloadSongsListButton" to="SongsListContent" method="_on_reload_songs_list"]
+[connection signal="finished" from="ChartInfo/Music" to="ChartInfo/Music" method="play"]
+[connection signal="button_down" from="Settings" to="SettingsScene" method="show"]
+[connection signal="hidden" from="SettingsScene" to="Settings" method="set_pressed" binds= [false]]
+[connection signal="settings_changed" from="SettingsScene" to="ChartInfo/Music" method="_on_music_volume_changed"]
+[connection signal="settings_changed_directly" from="SettingsScene" to="ChartInfo/Music" method="_on_music_volume_changed_directly"]
+[connection signal="confirmed" from="ChartLoadErrorDialog" to="ChartLoadErrorDialog" method="hide"]

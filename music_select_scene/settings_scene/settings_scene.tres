@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://q7cipqvm0skh"]
+
+[ext_resource type="FontFile" uid="uid://docqgmt0qhi30" path="res://JETBRAINSMONO-EXTRABOLD.TTF" id="1_nbhxa"]
+
+[resource]
+font = ExtResource("1_nbhxa")
+font_size = 18
+shadow_color = Color(0.31, 0.31, 0.31, 0.772549)
