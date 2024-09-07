@@ -15,7 +15,7 @@ func load_songs_list() -> void:
 		var basic_info: Dictionary = i.get_basic_info()
 		self.add_item("%s - %s" % [basic_info["song_name"], basic_info["composer"]])
 	self.add_item("...")
-	print("songs_list = ", self.songs_list)
+	LogScript.write_log(["Successfully load songs list: ", self.songs_list.charts])
 	#breakpoint
 
 

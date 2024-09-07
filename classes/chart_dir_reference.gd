@@ -30,6 +30,7 @@ func open(_chart_dir_path: String) -> Error:
 		return ERR_FILE_NOT_FOUND
 	if not self.bg_file_path:
 		self.bg_file_path = self.DEFAULT_BG_FILE_PATH
+	#LogScript.write_log(["BaseChartDirReference load complete: ", self._to_string()])
 	return OK
 
 
@@ -58,13 +59,11 @@ func get_basic_info() -> Dictionary:
 			basic_info_single_list = new_line.split('=', true, 1)
 			basic_info_single_list[0] = basic_info_single_list[0].strip_edges()
 			basic_info_single_list[1] = basic_info_single_list[1].strip_edges()
-			print("basic_info_single_list = ", basic_info_single_list)
 			if basic_info_single_list[0] in ["song_name", "composer", "chart_designer", "illustrator", "bpm"]:
 				basic_info[basic_info_single_list[0]] = basic_info_single_list[1]
 				if basic_info_single_list[0] == "bpm":
 					is_bpm_read = true
 		new_line = chart_file.get_line().strip_edges()
-		print("new_line = \"" + new_line + "\"")
 	if new_line[0] == '(' and not is_bpm_read:
 		new_line = new_line.strip_escapes().replace(' ', '').trim_prefix('(').left(new_line.find(')'))
 		basic_info["bpm"] = float(new_line)

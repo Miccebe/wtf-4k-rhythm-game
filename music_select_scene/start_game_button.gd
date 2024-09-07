@@ -22,7 +22,7 @@ func _pressed() -> void:
 		return
 	var scene_tree = get_tree()
 	scene_tree.change_scene_to_file("res://game_play_scene/game_play_scene.tscn")
-	print('Scene switched to "game_play_scene" successfully.')
+	LogScript.write_log(['Scene switched to "game_play_scene" successfully.'])
 
 
 func _on_enable() -> void:

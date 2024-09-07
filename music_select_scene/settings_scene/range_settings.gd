@@ -46,7 +46,7 @@ func _on_slider_changed(value: float) -> void:
 	$ValueText.text = self.correct_text(value)
 	if self.changed_actual_time:
 		emit_signal("settings_changed", value, self.settings_name)
-	print("$Slider.value = ", $Slider.value)
+	LogScript.write_log(["Successfully set settings ", self.settings_name, " to ", self.correct_text(value)])
 
 
 func _on_text_changed(new_text: String) -> void:
@@ -55,12 +55,13 @@ func _on_text_changed(new_text: String) -> void:
 	if match_result and match_result.get_string() == new_text:
 		$Slider.set_value_no_signal(self.correct_value(float(new_text)))
 		$ValueText.text = self.correct_text(float(new_text))
+		LogScript.write_log(["Successfully set settings ", self.settings_name, " to ", self.correct_value(float(new_text))])
 	else:
 		$ValueText.text = self.correct_text(original_value)
+		LogScript.write_log(["Set settings ", self.settings_name, " failed. Has reset to ", self.correct_text(original_value)])
 	if self.changed_actual_time:
 		emit_signal("settings_changed", $Slider.value)
-	print("$Slider.value = ", $Slider.value)
-
+	
 
 func _on_plus_button_down() -> void:
 	$Slider.value = self.correct_value($Slider.value + $Slider.step)
@@ -90,7 +91,7 @@ func correct_value(_value):
 	
 	
 func correct_text(_value) -> String:
-	var optional_percentage_char := func () -> String:
+	var optional_percentage_char = func () -> String:
 		if self.percentage:
 			return '%'
 		else:

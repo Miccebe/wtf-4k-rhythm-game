@@ -13,9 +13,9 @@ enum TextType {
 
 var current_display_text_type: TextType
 var current_display_text_time: float
+var is_paused: bool = false
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.text_type = self.TextType.EMPTY
 	self.current_display_text_type = self.text_type
@@ -23,8 +23,9 @@ func _ready() -> void:
 	self.current_display_text_time = self.text_display_time_max
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	if is_paused:
+		return
 	if self.text_type != self.current_display_text_type:
 		self.current_display_text_type = self.text_type
 		self.current_display_text_time = self.text_display_time_max
@@ -54,6 +55,14 @@ func get_judgement_text() -> void:
 		self.text = 'MISS'
 		self.label_settings.font_color = Color('#a5a5a5')
 		self.label_settings.outline_color = Color('#5a5a5a')
+
+
+func _on_paused() -> void:
+	self.is_paused = true
+
+
+func _on_continue() -> void:
+	self.is_paused = false
 
 
 func _on_test(new_text: String):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://coiv0twb4dfm5"]
+[gd_scene load_steps=24 format=3 uid="uid://coiv0twb4dfm5"]
 
 [ext_resource type="Script" path="res://game_play_scene/game_play_scene.gd" id="1_dsjt2"]
 [ext_resource type="FontFile" uid="uid://docqgmt0qhi30" path="res://JETBRAINSMONO-EXTRABOLD.TTF" id="1_m5g10"]
@@ -7,12 +7,18 @@
 [ext_resource type="Script" path="res://game_play_scene/retry_button.gd" id="4_gbsf5"]
 [ext_resource type="Script" path="res://game_play_scene/paused_text.gd" id="4_xdp6r"]
 [ext_resource type="Script" path="res://game_play_scene/exit_button.gd" id="5_fwllg"]
+[ext_resource type="Script" path="res://game_play_scene/tests.gd" id="6_djagm"]
 [ext_resource type="Script" path="res://game_play_scene/pause_button.gd" id="6_dnk7c"]
+[ext_resource type="Script" path="res://game_play_scene/chart_info.gd" id="7_m7pgr"]
 [ext_resource type="Script" path="res://game_play_scene/hit_effect.gd" id="8_bt3ar"]
+[ext_resource type="Script" path="res://music_select_scene/music.gd" id="9_2qeik"]
 [ext_resource type="Texture2D" uid="uid://b7ecv2duohx35" path="res://images/hit_effect.png" id="9_gardf"]
 [ext_resource type="AudioStream" uid="uid://v3y3p0ih6fs3" path="res://sound_effects/tap_hit.mp3" id="10_o51dp"]
 [ext_resource type="AudioStream" uid="uid://8v3ky5ixh5m5" path="res://sound_effects/catch_hit.mp3" id="11_cwej0"]
 [ext_resource type="Script" path="res://game_play_scene/track_sound.gd" id="12_e5udy"]
+[ext_resource type="Script" path="res://music_select_scene/settings_button.gd" id="13_ukww1"]
+[ext_resource type="PackedScene" uid="uid://beno4imwkrn5i" path="res://music_select_scene/settings_scene/settings_scene.tscn" id="14_d2815"]
+[ext_resource type="Script" path="res://game_play_scene/hit_sounds.gd" id="17_s4ukb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ti8e8"]
 font = ExtResource("1_m5g10")
@@ -30,6 +36,13 @@ font_size = 93
 font_color = Color(0, 1, 0.233333, 1)
 outline_size = 14
 outline_color = Color(0, 0.243137, 0.352941, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k8dfo"]
+font = ExtResource("1_m5g10")
+font_size = 18
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.662745)
+shadow_offset = Vector2(1.5, 1.5)
 
 [node name="GamePlayScene" type="Node2D"]
 script = ExtResource("1_dsjt2")
@@ -75,10 +88,10 @@ anchors_preset = 0
 
 [node name="ScoreDisplay" type="Label" parent="Background/Texts"]
 layout_mode = 0
-offset_left = 667.0
-offset_top = 379.0
-offset_right = 707.0
-offset_bottom = 402.0
+offset_left = 670.0
+offset_top = 412.0
+offset_right = 710.0
+offset_bottom = 435.0
 label_settings = SubResource("LabelSettings_ti8e8")
 script = ExtResource("1_noj84")
 
@@ -106,6 +119,31 @@ text = "Paused"
 label_settings = SubResource("LabelSettings_jcqxr")
 script = ExtResource("4_xdp6r")
 
+[node name="ChartInfo" type="Node2D" parent="Background"]
+script = ExtResource("7_m7pgr")
+
+[node name="Bg" type="Sprite2D" parent="Background/ChartInfo"]
+position = Vector2(767, 284)
+scale = Vector2(0.5, 0.5)
+
+[node name="Music" type="AudioStreamPlayer" parent="Background/ChartInfo"]
+mix_target = 1
+script = ExtResource("9_2qeik")
+
+[node name="BasicInfo" type="Label" parent="Background/ChartInfo"]
+offset_left = 666.0
+offset_top = 4.0
+offset_right = 1365.0
+offset_bottom = 180.0
+text = "Title:
+Composer:
+Illustrator:
+Chart Designer:
+BPM:
+"
+label_settings = SubResource("LabelSettings_k8dfo")
+vertical_alignment = 1
+
 [node name="Tests" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -113,19 +151,29 @@ offset_left = 48.0
 offset_top = 34.0
 offset_right = 314.0
 offset_bottom = 623.0
+script = ExtResource("6_djagm")
+
+[node name="TextEdit" type="TextEdit" parent="Tests"]
+layout_mode = 0
+offset_right = 178.0
+offset_bottom = 102.0
+placeholder_text = "填入导出设定"
 
 [node name="Button" type="Button" parent="Tests"]
 layout_mode = 0
-offset_right = 117.0
-offset_bottom = 45.0
-text = "测试谱面内容打印"
+offset_left = 10.0
+offset_top = 124.0
+offset_right = 103.0
+offset_bottom = 164.0
+text = "导出谱面"
 
 [node name="Button2" type="Button" parent="Tests"]
 layout_mode = 0
-offset_top = 69.0
-offset_right = 136.0
-offset_bottom = 111.0
-text = "测试导出谱面打印"
+offset_left = 12.0
+offset_top = 181.0
+offset_right = 103.0
+offset_bottom = 229.0
+text = "测试一下"
 
 [node name="Buttons" type="Control" parent="."]
 layout_mode = 3
@@ -135,34 +183,49 @@ offset_bottom = 40.0
 
 [node name="RetryButton" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 994.0
-offset_top = 90.0
-offset_right = 1086.0
-offset_bottom = 135.0
+offset_left = 15.0
+offset_top = 495.0
+offset_right = 89.0
+offset_bottom = 535.0
 mouse_default_cursor_shape = 2
 text = "Retry"
 script = ExtResource("4_gbsf5")
 
 [node name="ExitButton" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 996.0
-offset_top = 167.0
-offset_right = 1085.0
-offset_bottom = 212.0
+offset_left = 15.0
+offset_top = 545.0
+offset_right = 89.0
+offset_bottom = 585.0
 mouse_default_cursor_shape = 2
 text = "Exit"
 script = ExtResource("5_fwllg")
 
 [node name="PauseButton" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 995.0
-offset_top = 238.0
-offset_right = 1084.0
-offset_bottom = 283.0
+offset_left = 15.0
+offset_top = 595.0
+offset_right = 89.0
+offset_bottom = 635.0
 mouse_default_cursor_shape = 2
 toggle_mode = true
 text = "Pause"
 script = ExtResource("6_dnk7c")
+
+[node name="Settings" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 445.0
+offset_right = 89.0
+offset_bottom = 485.0
+mouse_default_cursor_shape = 2
+toggle_mode = true
+text = "Settings"
+script = ExtResource("13_ukww1")
+
+[node name="SettingsScene" parent="Buttons" instance=ExtResource("14_d2815")]
+visible = false
+position = Vector2(576, 324)
 
 [node name="ChartDisplay" type="Node2D" parent="."]
 
@@ -194,6 +257,7 @@ scale = Vector2(1.75, 1.17969)
 texture = ExtResource("9_gardf")
 
 [node name="NoteTypes" type="Node2D" parent="ChartDisplay"]
+visible = false
 
 [node name="Track1" type="Node2D" parent="ChartDisplay/NoteTypes"]
 
@@ -264,6 +328,7 @@ color = Color(0, 0.533333, 1, 1)
 polygon = PackedVector2Array(-25, -10, 25, -10, 25, 0, -25, 0)
 
 [node name="HitSounds" type="Node" parent="ChartDisplay"]
+script = ExtResource("17_s4ukb")
 
 [node name="Tap" type="AudioStreamPlayer" parent="ChartDisplay/HitSounds"]
 stream = ExtResource("10_o51dp")
@@ -281,10 +346,23 @@ stream = ExtResource("10_o51dp")
 stream = ExtResource("10_o51dp")
 script = ExtResource("12_e5udy")
 
-[connection signal="pressed" from="Tests/Button" to="." method="_on_print_chart"]
-[connection signal="pressed" from="Tests/Button2" to="." method="_on_print_exported_chart"]
-[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_pause_button_continued"]
-[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_pause_button_paused"]
-[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_pause_button_paused"]
-[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_pause_button_paused"]
-[connection signal="toggled" from="Buttons/PauseButton" to="Background/Texts/PausedText" method="_on_pause_button_toggled"]
+[connection signal="pressed" from="Tests/Button" to="Tests" method="_on_export_chart_button_pressed"]
+[connection signal="continued" from="Buttons/PauseButton" to="Background/Texts/JudgementDisplay" method="_on_continue"]
+[connection signal="continued" from="Buttons/PauseButton" to="Background/Texts/PausedText" method="_on_continued"]
+[connection signal="continued" from="Buttons/PauseButton" to="Background/ChartInfo/Music" method="_on_continued"]
+[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_continued"]
+[connection signal="continued" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_continued"]
+[connection signal="paused" from="Buttons/PauseButton" to="Background/Texts/JudgementDisplay" method="_on_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="Background/Texts/PausedText" method="_on_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="Background/ChartInfo/Music" method="_on_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitEffect" method="_on_paused"]
+[connection signal="paused" from="Buttons/PauseButton" to="ChartDisplay/HitSounds/TrackSound" method="_on_paused"]
+[connection signal="button_down" from="Buttons/Settings" to="Buttons/Settings" method="_on_button_down"]
+[connection signal="button_down" from="Buttons/Settings" to="Buttons/SettingsScene" method="show"]
+[connection signal="button_up" from="Buttons/Settings" to="Buttons/Settings" method="_on_button_up"]
+[connection signal="hidden" from="Buttons/SettingsScene" to="Buttons/Settings" method="set_pressed" binds= [false]]
+[connection signal="settings_changed" from="Buttons/SettingsScene" to="." method="_on_keybind_changed"]
+[connection signal="settings_changed" from="Buttons/SettingsScene" to="Background/ChartInfo/Music" method="_on_music_volume_changed"]
+[connection signal="settings_changed" from="Buttons/SettingsScene" to="ChartDisplay/HitSounds" method="_on_se_volume_changed"]
+[connection signal="settings_changed" from="Buttons/SettingsScene" to="ChartDisplay/HitSounds" method="_on_correct_volume_changed"]
+[connection signal="settings_changed_directly" from="Buttons/SettingsScene" to="Background/ChartInfo/Music" method="_on_music_volume_changed_directly"]

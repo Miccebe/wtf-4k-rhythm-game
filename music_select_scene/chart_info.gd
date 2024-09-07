@@ -45,7 +45,7 @@ func _on_item_selected(idx: int) -> void:
 
 
 #func _on_item_unselected(_at_position: Vector2, _mouse_button_index: int) -> void:
-	#print("_on_item_unselected runned")
+	#LogScript.write_log(["_on_item_unselected runned"])
 	#self.is_basic_info_available = false
 	#self.set_unavailable(NO_CHART_SELECTED)
 

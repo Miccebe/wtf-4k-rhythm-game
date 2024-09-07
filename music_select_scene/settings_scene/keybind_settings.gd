@@ -40,4 +40,4 @@ func set_keybind(_keycode: Key) -> void:
 	$Container/Button.text = OS.get_keycode_string(_keycode)
 	$Container/Button.set_pressed_no_signal(false)
 	self.is_setting_keybind = false
-	print("keybind = %s" % self.keybind)
+	LogScript.write_log(["Successfully set keybind " ,self.settings_name, " to " ,OS.get_keycode_string(_keycode)])

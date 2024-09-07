@@ -22,7 +22,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 ScoreStat="*res://classes/score_stat.gd"
-PlayingChart="*res://game_play_scene/playing_chart.gd"
+PlayingChart="*res://classes/playing_chart.gd"
+LogScript="*res://classes/log.gd"
 
 [display]
 

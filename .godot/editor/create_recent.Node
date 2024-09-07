@@ -1,4 +1,5 @@
 Button
+TextEdit
 Control
 Label
 AcceptDialog
@@ -11,4 +12,3 @@ HBoxContainer
 MarginContainer
 ColorRect
 Panel
-MenuBar

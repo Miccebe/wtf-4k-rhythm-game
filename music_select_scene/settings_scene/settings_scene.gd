@@ -13,7 +13,7 @@ const SETTINGS_PAGE_MAX: int = 1
 
 signal page_changed(_page: SettingsPage)
 signal settings_changed(changed_config: Settings)
-signal settings_changed_directly(changed_value: float)
+signal settings_changed_directly(_value: float, _settings_name: String)
 
 
 func _ready() -> void:
@@ -30,6 +30,7 @@ func _ready() -> void:
 	$Control/VolumeSettings/MusicVolume/Slider.value = $Control/VolumeSettings/MusicVolume.correct_value(settings_config.music_volume)
 	$Control/VolumeSettings/SEVolume/Slider.value = $Control/VolumeSettings/SEVolume.correct_value(settings_config.se_volume)
 	$Control/VolumeSettings/CorrectVolume/Slider.value = $Control/VolumeSettings/CorrectVolume.correct_value(settings_config.correct_volume)
+	emit_signal("settings_changed", self.settings_config)
 
 
 func save_settings() -> void:

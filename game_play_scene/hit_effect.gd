@@ -8,7 +8,7 @@ func _ready() -> void:
 	is_paused = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_paused:
 		return
 	
@@ -24,9 +24,9 @@ func change_hit_effect_visible(track: int, _is_visible: bool) -> void:
 	hit_effect.visible = _is_visible
 
 
-func _on_pause_button_paused() -> void:
+func _on_paused() -> void:
 	is_paused = true
 
 
-func _on_pause_button_continued() -> void:
+func _on_continued() -> void:
 	is_paused = false

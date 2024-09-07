@@ -5,5 +5,9 @@ func _ready() -> void:
 	self.visible = false
 
 
-func _on_pause_button_toggled(toggled_on: bool) -> void:
-	self.visible = toggled_on
+func _on_paused() -> void:
+	self.visible = true
+
+
+func _on_continued() -> void:
+	self.visible = false

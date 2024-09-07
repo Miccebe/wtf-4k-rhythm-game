@@ -27,7 +27,6 @@ func _init() -> void:
 	else:
 		self.load_config()
 	
-	
 
 func save_config() -> void:
 	var settings_file: ConfigFile = ConfigFile.new()
