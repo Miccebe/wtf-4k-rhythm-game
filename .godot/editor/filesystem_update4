@@ -1,0 +1,3 @@
+res://music_select_scene/music_select_scene.tscn
+res://music_select_scene/settings_scene/settings_scene.tres
+res://classes/chart.gd
