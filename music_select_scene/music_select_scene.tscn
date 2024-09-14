@@ -138,6 +138,7 @@ Please check your chart file if there's any syntax."
 [connection signal="chart_load_failed" from="StartGameButton" to="ChartLoadErrorDialog" method="show"]
 [connection signal="disable" from="StartGameButton" to="StartGameButton" method="_on_disable"]
 [connection signal="enable" from="StartGameButton" to="StartGameButton" method="_on_enable"]
+[connection signal="item_selected" from="SongsListContent" to="SongsListContent" method="_on_item_selected"]
 [connection signal="item_selected" from="SongsListContent" to="ChartInfo" method="_on_item_selected"]
 [connection signal="pressed" from="ReloadSongsListButton" to="SongsListContent" method="_on_reload_songs_list"]
 [connection signal="finished" from="ChartInfo/Music" to="ChartInfo/Music" method="play"]

@@ -9,6 +9,12 @@ const BG_FILE_NAME: String = "bg.png"
 const MUSIC_FILE_NAME: String = "track.mp3"
 const DEFAULT_BG_FILE_PATH: String = "res://images/default_bg.png"
 
+const DEFAULT_SONG_NAME: String = "Unnamed Song"
+const DEFAULT_COMPOSER: String = "Unknown Composer"
+const DEFAULT_ILLUSTRATOR: String = ""
+const DEFAULT_CHART_DESIGNER: String = ""
+const DEFAULT_PREVIEW_CLIP: String = "0:00-0:30"
+
 
 func open(_chart_dir_path: String) -> Error:
 	var chart_dir: DirAccess = DirAccess.open(_chart_dir_path)
@@ -37,11 +43,13 @@ func open(_chart_dir_path: String) -> Error:
 func get_basic_info() -> Dictionary:
 	var chart_file: FileAccess = FileAccess.open(self.chart_file_path, FileAccess.READ)
 	var basic_info: Dictionary = {
-		"song_name": "",
-		"composer": "",
-		"chart_designer": "",
-		"illustrator": "",
-		"bpm": 0
+		"song_name": self.DEFAULT_SONG_NAME,
+		"composer": self.DEFAULT_COMPOSER,
+		"chart_designer": self.DEFAULT_CHART_DESIGNER,
+		"illustrator": self.DEFAULT_ILLUSTRATOR,
+		"preview_clip": self.DEFAULT_PREVIEW_CLIP,
+		"offset": 0.0,
+		"bpm": 0.0,
 	}
 	if chart_file.eof_reached():
 		return basic_info
@@ -59,10 +67,12 @@ func get_basic_info() -> Dictionary:
 			basic_info_single_list = new_line.split('=', true, 1)
 			basic_info_single_list[0] = basic_info_single_list[0].strip_edges()
 			basic_info_single_list[1] = basic_info_single_list[1].strip_edges()
-			if basic_info_single_list[0] in ["song_name", "composer", "chart_designer", "illustrator", "bpm"]:
+			if basic_info_single_list[0] in ["song_name", "composer", "chart_designer", "illustrator", "preview_clip"]:
 				basic_info[basic_info_single_list[0]] = basic_info_single_list[1]
+			elif basic_info_single_list[0] in ["offset", "bpm"]:
 				if basic_info_single_list[0] == "bpm":
 					is_bpm_read = true
+				basic_info[basic_info_single_list[0]] = float(basic_info_single_list[1])
 		new_line = chart_file.get_line().strip_edges()
 	if new_line[0] == '(' and not is_bpm_read:
 		new_line = new_line.strip_escapes().replace(' ', '').trim_prefix('(').left(new_line.find(')'))

@@ -1,14 +1,14 @@
+Label
+LineEdit
 Button
+ColorRect
 TextEdit
 Control
-Label
 AcceptDialog
-LineEdit
 AudioStreamPlayer
 ConfirmationDialog
 PopupPanel
 Popup
 HBoxContainer
 MarginContainer
-ColorRect
 Panel

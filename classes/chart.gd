@@ -1,6 +1,7 @@
 class_name Chart
 
 var chart: Array[ChartElement] = []
+#var bpm_list: Array[int] = []
 
 enum Track {
 	TRACK_1 = 1,
@@ -184,6 +185,18 @@ func _to_string() -> String:
 	return result + "])"
 
 
+func get_track(_text) -> Track:
+	var _value: int = int(_text)
+	if _value == 1:
+		return Track.TRACK_1
+	elif _value == 2:
+		return Track.TRACK_2
+	elif _value == 3:
+		return Track.TRACK_3
+	else:  # _value == 4
+		return Track.TRACK_4
+
+
 class ChartElement extends Chart:
 	var note_duration: float
 	var note_judgement_time: float
@@ -247,18 +260,14 @@ class Note extends ChartElement:
 		else:
 			judgement_type = JudgementType.MISS
 		return [time_deviation, judgement_type]
-	
-	func create_display() -> void:
-		## 创建音符显示并匹配脚本
-		pass		# 此处占位，由其子类覆写，如果不覆写那就是什么操作都不执行
-	
+
 
 class BPM extends ChartElement:
 	var bpm: float
 	func _init(_note_text: String, _index: int, _before_chart: Array[ChartElement]) -> void:
 		## _note_text: (**<numbers>**)
 		self.chart = _before_chart
-		self.bpm = float(_note_text)
+		self.bpm = int(float(_note_text) * 100) / 100.0
 		self.note_duration = 0
 		self.note_judgement_time = self.get_note_judgement_time(_index)
 		self.note_judgement_count = 0
@@ -297,11 +306,11 @@ class EmptyNote extends Note:
 	
 
 class TapNote extends Note:
-	var track: int
+	var track: Track = Track.TRACK_1
 	func _init(_note_text: String, _index: int, _before_chart: Array[ChartElement]) -> void:
 		## _note_text: **[1-4]**
 		self.chart = _before_chart
-		self.track = int(_note_text)
+		self.track = self.get_track(_note_text)
 		self.note_duration = self.get_note_duration(_index)
 		self.note_judgement_time = self.get_note_judgement_time(_index)
 		self.note_judgement_count = 1
@@ -313,18 +322,14 @@ class TapNote extends Note:
 	func get_judgement_result(_time: float) -> Array:
 		## 输出格式为: [time_deviation, judgement_type]
 		return self._get_judgement_result(_time)
-	
-	func create_display() -> void:
-		## 创建音符显示并匹配脚本
-		pass
-	
+
 
 class CatchNote extends Note:
-	var track: int
+	var track: Track = Track.TRACK_1
 	func _init(_note_text: String, _index: int, _before_chart: Array[ChartElement]) -> void:
 		## _note_text: **[1-4]c**
 		self.chart = _before_chart
-		self.track = int(_note_text[0])
+		self.track = self.get_track(_note_text[0])
 		self.note_duration = self.get_note_duration(_index)
 		self.note_judgement_time = self.get_note_judgement_time(_index)
 		self.note_judgement_count = 1
@@ -339,7 +344,7 @@ class CatchNote extends Note:
 		
 
 class HoldNote extends Note:
-	var track: int
+	var track: Track = Track.TRACK_1
 	var hold_duration_note_time: int
 	var hold_duration_note_count: int
 	var hold_end_judgement_time: float
@@ -347,7 +352,7 @@ class HoldNote extends Note:
 	func _init(_note_text: String, _index: int, _before_chart: Array[ChartElement]) -> void:
 		## _note_text: **[1-4]h[[<numbers>:<numbers>]]**
 		self.chart = _before_chart
-		self.track = int(_note_text[0])
+		self.track = self.get_track(_note_text[0])
 		self.note_duration = self.get_note_duration(_index)
 		self.note_judgement_time = self.get_note_judgement_time(_index)
 		self.note_judgement_count = 2
@@ -399,7 +404,7 @@ class EachNote extends Note:
 					self.note_list.append(TapNote.new(i, _index, self.chart))
 					self.note_judgement_count += 1
 				#print("note_matched.get_string() = ", note_matched.get_string(), ", self.note_list[-1] = ", self.note_list[-1])
-		#LogScript.write_log(["EachNote Added: \"", _note_text, "\" to ", self._to_string()], true)
+		#LogScript.write_log(["EachNote Added: \"", _note_text, "\" to ", self._to_string(), ", self.note_duration = ", self.note_duration])
 
 	func _to_string() -> String:
 		var result: String = "EachNote(["

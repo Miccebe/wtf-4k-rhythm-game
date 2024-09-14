@@ -257,12 +257,12 @@ size_flags_stretch_ratio = 0.6
 script = ExtResource("5_07vx2")
 greater_text = "$self$"
 lesser_text = "$self$"
-settings_name = "input_offset"
+settings_name = "display_offset"
 
 [node name="Title" type="Label" parent="Control/GameSettings/InputOffset"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Input Offset"
+text = "Display Offset"
 label_settings = ExtResource("2_tsgin")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -304,7 +304,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 script = ExtResource("5_07vx2")
 default_value = 7.0
-value_max = 12.0
+value_max = 16.0
 value_min = 1.0
 greater_text = "Sonic"
 integer = false
@@ -650,8 +650,8 @@ alignment = 1
 
 [connection signal="page_changed" from="." to="RightButton" method="_on_page_changed"]
 [connection signal="page_changed" from="." to="LeftButton" method="_on_page_changed"]
-[connection signal="pressed" from="Close" to="." method="save_settings"]
 [connection signal="pressed" from="Close" to="." method="close_windows"]
+[connection signal="pressed" from="Close" to="." method="save_settings"]
 [connection signal="pressed" from="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton" to="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" method="show"]
 [connection signal="confirmed" from="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" to="Control/GameSettings/ChartSettingsTitle/Container/OffsetAdjustmentButton/AcceptDialog" method="hide"]
 [connection signal="button_down" from="Control/GameSettings/MusicOffset/Minus" to="Control/GameSettings/MusicOffset" method="_on_minus_button_down"]

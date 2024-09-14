@@ -28,7 +28,7 @@ func _ready() -> void:
 		self.correct_text_regex = RegEx.create_from_string(r"^\-?\d+\.?(\d+)?$")
 	$Slider.set_value_no_signal(self.correct_value(self.default_value))
 	$ValueText.text = self.correct_text(self.default_value)
-	connect("settings_changed", $"../../.."._on_received_change_actual_time)
+	self.settings_changed.connect($"../../.."._on_received_change_actual_time)
 
 
 func _process(delta: float) -> void:

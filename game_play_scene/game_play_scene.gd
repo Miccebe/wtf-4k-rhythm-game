@@ -1,12 +1,11 @@
 extends Node2D
 
-
-func _init() -> void:
-	pass
+@export var testing: bool = false
 
 
 func _ready() -> void:
-	PlayingChart.connect("chart_playing_started", $Background/ChartInfo/Music.play)
+	PlayingChart.enter_game_play_scene()
+	PlayingChart.play_chart()
 
 
 func _on_keybind_changed(changed_config: Settings) -> void:

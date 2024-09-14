@@ -17,11 +17,13 @@ signal settings_changed_directly(_value: float, _settings_name: String)
 
 
 func _ready() -> void:
+	self.settings_changed.connect(PlayingChart._on_offset_changed)
+	
 	self.current_settings_page = SettingsPage.GAME_SETTINGS
 	emit_signal("page_changed", current_settings_page)
 	settings_config.load_config()
 	$Control/GameSettings/MusicOffset/Slider.value = $Control/GameSettings/MusicOffset.correct_value(settings_config.music_offset)
-	$Control/GameSettings/InputOffset/Slider.value = $Control/GameSettings/InputOffset.correct_value(settings_config.input_offset)
+	$Control/GameSettings/InputOffset/Slider.value = $Control/GameSettings/InputOffset.correct_value(settings_config.display_offset)
 	$Control/GameSettings/ChartFlowSpeed/Slider.value = $Control/GameSettings/ChartFlowSpeed.correct_value(settings_config.chart_flow_speed)
 	$Control/GameSettings/Track1Keybind.set_keybind(settings_config.track1_key)
 	$Control/GameSettings/Track2Keybind.set_keybind(settings_config.track2_key)
@@ -35,7 +37,7 @@ func _ready() -> void:
 
 func save_settings() -> void:
 	settings_config.music_offset = $Control/GameSettings/MusicOffset/Slider.value
-	settings_config.input_offset = $Control/GameSettings/InputOffset/Slider.value
+	settings_config.display_offset = $Control/GameSettings/InputOffset/Slider.value
 	settings_config.chart_flow_speed = $Control/GameSettings/ChartFlowSpeed/Slider.value
 	settings_config.track1_key = $Control/GameSettings/Track1Keybind.keybind
 	settings_config.track2_key = $Control/GameSettings/Track2Keybind.keybind
@@ -46,6 +48,7 @@ func save_settings() -> void:
 	settings_config.correct_volume = $Control/VolumeSettings/CorrectVolume/Slider.value
 	settings_config.save_config()
 	emit_signal("settings_changed", settings_config)
+	print("Emitted signal: settings_changed")
 
 
 func close_windows() -> void:
@@ -54,3 +57,4 @@ func close_windows() -> void:
 
 func _on_received_change_actual_time(_value: float, _settings_name: String) -> void:
 	emit_signal("settings_changed_directly", _value, _settings_name)
+	print("Emitted signal: settings_changed_directly")

@@ -8,6 +8,7 @@ var is_enabled: bool = false
 signal enable
 signal disable
 signal chart_load_failed
+signal changed_to_game_play_scene
 
 func _ready() -> void:
 	_on_disable()

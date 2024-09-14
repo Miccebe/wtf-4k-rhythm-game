@@ -29,4 +29,8 @@ func select_and_emit_signal(idx: int, single: bool = true) -> void:
 	self.selected_chart = idx
 	self.select(idx, single)
 	emit_signal("item_selected", idx)
-	print("select_and_emit_signal runned")
+	print("select_and_emit_signal runned: idx = ", idx)
+
+
+func _on_item_selected(idx: int) -> void:
+	self.selected_chart = idx

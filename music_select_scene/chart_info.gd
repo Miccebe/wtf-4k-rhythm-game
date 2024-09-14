@@ -26,21 +26,28 @@ func _on_item_selected(idx: int) -> void:
 		self.is_basic_info_available = true	
 	var song_selected: BaseChartDirReference = songs_list[idx]
 	var basic_info: Dictionary = song_selected.get_basic_info()
+	print("_on_item_selected: basic_info = ", basic_info)
 	var bg: ImageTexture = song_selected.get_bg()
 	var music: AudioStreamMP3 = song_selected.get_music()
-	$BasicInfo.text = (
-		"Title: %s\nComposer: %s\nIllustrator: %s\nChart Designer: %s\nBPM: %.2f" %
+	var info_text: String = (
+		"Title: %s\nComposer: %s\nIllustrator: %s\nChart Designer: %s\nBPM: %s" %
 		[
 			basic_info["song_name"],
 			basic_info["composer"],
 			basic_info["illustrator"],
 			basic_info["chart_designer"],
-			basic_info["bpm"],
+			(
+				str(int(basic_info["bpm"])) if basic_info["bpm"] == int(basic_info["bpm"]) 
+				else "%.2f" % basic_info["bpm"]
+			),
 		]
 	)
+	$BasicInfo.text = info_text
 	$Bg.texture = bg
 	$Music.stream = music
-	$Music.play()
+	$Music.set_preview_clip(basic_info["preview_clip"])
+	$Music.time_after_fading_out = 0
+	$Music.is_fading_out = false
 	$"../StartGameButton".emit_signal("enable")
 
 

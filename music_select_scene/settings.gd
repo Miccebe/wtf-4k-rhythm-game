@@ -4,9 +4,9 @@ class_name Settings
 var settings_path_string: String = "%s/settings.ini" % OS.get_executable_path()
 # 延迟设定
 var music_offset: int = 0
-var input_offset: int = 0
+var display_offset: int = 0
 var chart_flow_speed: float = 7.0
-# 流速为 1.0 ~ 12.0, 7.5是用的最舒服的流速, 大于12.0为Sonic速
+# 流速为 1.0 ~ 16.0, 7.5是用的最舒服的流速, 大于16.0为Sonic速
 # 键位设定
 var track1_key: Key = KEY_D
 var track2_key: Key = KEY_F
@@ -31,7 +31,7 @@ func _init() -> void:
 func save_config() -> void:
 	var settings_file: ConfigFile = ConfigFile.new()
 	settings_file.set_value("game_settings", "music_offset", self.music_offset)
-	settings_file.set_value("game_settings", "input_offset", self.input_offset)
+	settings_file.set_value("game_settings", "display_offset", self.display_offset)
 	settings_file.set_value("game_settings", "chart_flow_speed", self.chart_flow_speed)
 	settings_file.set_value("game_settings", "track1_key", self.track1_key)
 	settings_file.set_value("game_settings", "track2_key", self.track2_key)
@@ -50,7 +50,7 @@ func load_config() -> void:
 		new_settings_file.close()
 		settings_file.load(self.settings_path_string)
 	self.music_offset = settings_file.get_value("game_settings", "music_offset", 0)
-	self.input_offset = settings_file.get_value("game_settings", "input_offset", 0)
+	self.display_offset = settings_file.get_value("game_settings", "display_offset", 0)
 	self.chart_flow_speed = settings_file.get_value("game_settings", "chart_flow_speed", 7.5)
 	self.track1_key = settings_file.get_value("game_settings", "track1_key", KEY_D)
 	self.track2_key = settings_file.get_value("game_settings", "track2_key", KEY_F)

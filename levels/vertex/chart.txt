@@ -2,7 +2,9 @@ $song_name = VERTeX
 $composer = Hiro「maimai」より
 $chart_designer = Miccebe
 $illustrator = SEGA
-
+$preview_clip = 0:27.56-0:54.90
+$bpm = 237
+$offset = 50
 
 
 (237){4},{1},,{4}1/4h[8:5],
